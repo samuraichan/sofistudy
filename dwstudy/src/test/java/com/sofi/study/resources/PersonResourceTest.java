@@ -129,4 +129,49 @@ public class PersonResourceTest {
         .post(Entity.entity(p, MediaType.APPLICATION_JSON)).getStatus())
         .isEqualTo(HttpStatus.OK_200);
   }
+  
+  @Test
+  public void testEmailFormat() {
+    Person p = new Person("raul", "dkd@.com");
+    assertThat(resources.target("/user/person")
+        .request()
+        .post(Entity.entity(p, MediaType.APPLICATION_JSON)).getStatus())
+        .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY_422);
+    
+    p = new Person("raul", "dkd@d.com");
+    assertThat(resources.target("/user/person")
+        .request()
+        .post(Entity.entity(p, MediaType.APPLICATION_JSON)).getStatus())
+        .isEqualTo(HttpStatus.OK_200);
+    
+    p = new Person("raul", "dkd@com");
+    assertThat(resources.target("/user/person")
+        .request()
+        .post(Entity.entity(p, MediaType.APPLICATION_JSON)).getStatus())
+        .isEqualTo(HttpStatus.OK_200);
+    
+    p = new Person("raul", "dkd@com.");
+    assertThat(resources.target("/user/person")
+        .request()
+        .post(Entity.entity(p, MediaType.APPLICATION_JSON)).getStatus())
+        .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY_422);
+    
+    p = new Person("raul", "dk d@gmail.com");
+    assertThat(resources.target("/user/person")
+        .request()
+        .post(Entity.entity(p, MediaType.APPLICATION_JSON)).getStatus())
+        .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY_422);
+    
+    p = new Person("raul", " dkd@gmail.com");
+    assertThat(resources.target("/user/person")
+        .request()
+        .post(Entity.entity(p, MediaType.APPLICATION_JSON)).getStatus())
+        .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY_422);
+    
+    p = new Person("raul", "dkd@gmail.com  ");
+    assertThat(resources.target("/user/person")
+        .request()
+        .post(Entity.entity(p, MediaType.APPLICATION_JSON)).getStatus())
+        .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY_422);
+  }
 }
