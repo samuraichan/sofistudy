@@ -1,4 +1,30 @@
+# Database settings.
+database:
+  driverClass: org.postgresql.Driver
+  user: postgres
+  password: sa
+  url: jdbc:postgresql://localhost:5432/springbootdb
+  properties:
+    hibernate.id.new_generator_mappings: true
+    hibernate.show_sql: true
+
+# Logging settings.
 logging:
+
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
   level: INFO
+  
+  # Logger-specific levels.
   loggers:
-    sofi: DEBUG
+
+    # Sets the level for 'com.example.app' to DEBUG.
+    com.sofi.study: DEBUG
+
+    # Redirects SQL logs to a separate file
+    org.hibernate.SQL:
+      level: DEBUG
+  
+
+
+
+
