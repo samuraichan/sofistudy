@@ -1,5 +1,6 @@
 package com.sofi.study.resources;
 
+import javax.validation.Valid;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -13,7 +14,7 @@ public class PersonResource {
    
   @POST
   @Path("/user/person")
-  public Person savePerson(Person person) {
+  public Person savePerson(@Valid Person person) {
     return person;
   }
 }

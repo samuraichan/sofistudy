@@ -1,10 +1,19 @@
 package com.sofi.study.api;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Person {
+  @NotBlank(message="must be provided")
   private String name;
+  
   private String email;
+  
+  @Pattern(message="is invalid", regexp="^(?!000)(?!666)(?!9)(\\d{3}|\\*{3})[-.,]?(?!00)(\\d{2}|\\*{2})[-.,]?(?!0000)(\\d{4}|\\*{4})$")
+  private String ssn;
 
   private Person() {
     // Jackson deserialization
@@ -14,8 +23,14 @@ public class Person {
     this.name = name;
     this.email = email;
   }
+  
+  public Person(String name, String email, String ssn) {
+    this.name = name;
+    this.email = email;
+    this.ssn = ssn;
+  }
 
-  @JsonProperty
+  @JsonProperty(value="alias")
   public String getName() {
     return name;
   }
@@ -34,6 +49,14 @@ public class Person {
   public void setEmail(String email) {
     this.email = email;
   }
+  
+  public String getSsn() {
+    return ssn;
+  }
+
+  public void setSsn(String ssn) {
+    this.ssn = ssn;
+  }
 
   @Override
   public int hashCode() {
@@ -41,6 +64,7 @@ public class Person {
     int result = 1;
     result = prime * result + ((email == null) ? 0 : email.hashCode());
     result = prime * result + ((name == null) ? 0 : name.hashCode());
+    result = prime * result + ((ssn == null) ? 0 : ssn.hashCode());
     return result;
   }
 
@@ -62,6 +86,11 @@ public class Person {
       if (other.name != null)
         return false;
     } else if (!name.equals(other.name))
+      return false;
+    if (ssn == null) {
+      if (other.ssn != null)
+        return false;
+    } else if (!ssn.equals(other.ssn))
       return false;
     return true;
   }
