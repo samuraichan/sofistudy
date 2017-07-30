@@ -11,7 +11,7 @@ import org.hibernate.annotations.Where;
 @Where(clause="active_flag = 'Y'")
 public class PhoneNumber extends BaseEntity {
   
-  @Column
+  @Column(name="phone")
   private String number;
   
   public String getNumber() {
@@ -21,4 +21,6 @@ public class PhoneNumber extends BaseEntity {
   public void setNumber(String number) {
     this.number = number;
   }
+  
+  
 }

@@ -3,7 +3,7 @@ database:
   driverClass: org.postgresql.Driver
   user: postgres
   password: sa
-  url: jdbc:postgresql://localhost:5432/springbootdb
+  url: jdbc:postgresql://localhost:5432/sofidb
   properties:
     hibernate.id.new_generator_mappings: true
     hibernate.show_sql: true

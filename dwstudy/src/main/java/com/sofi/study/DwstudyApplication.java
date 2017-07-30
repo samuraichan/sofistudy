@@ -7,14 +7,17 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 import com.sofi.study.api.PhoneNumber;
+import com.sofi.study.api.User;
 import com.sofi.study.db.PhoneNumberDAO;
+import com.sofi.study.db.UserDAO;
 import com.sofi.study.resources.HelloResource;
 import com.sofi.study.resources.PersonResource;
 import com.sofi.study.resources.PhoneNumberResource;
+import com.sofi.study.resources.UserResource;
 
 public class DwstudyApplication extends Application<DwstudyConfiguration> {
   
-  private final HibernateBundle<DwstudyConfiguration> hibernate = new HibernateBundle<DwstudyConfiguration>(PhoneNumber.class) {
+  private final HibernateBundle<DwstudyConfiguration> hibernate = new HibernateBundle<DwstudyConfiguration>(PhoneNumber.class, User.class) {
     @Override
     public DataSourceFactory getDataSourceFactory(DwstudyConfiguration configuration) {
       return configuration.getDataSourceFactory();
@@ -40,5 +43,6 @@ public class DwstudyApplication extends Application<DwstudyConfiguration> {
     environment.jersey().register(new HelloResource());
     environment.jersey().register(new PersonResource());
     environment.jersey().register(new PhoneNumberResource(new PhoneNumberDAO(hibernate.getSessionFactory())));
+    environment.jersey().register(new UserResource(new UserDAO(hibernate.getSessionFactory())));
   }
 }

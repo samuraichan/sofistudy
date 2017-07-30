@@ -1,5 +1,6 @@
 package com.sofi.study.resources;
 
+import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.jersey.params.LongParam;
 
 import javax.validation.Valid;
@@ -25,12 +26,14 @@ public class PhoneNumberResource {
   }
    
   @POST
+  @UnitOfWork
   @Path("/phoneNumber")
   public PhoneNumber savePhoneNumber(@Valid PhoneNumber phoneNumber) {
     return phoneNumber;
   }
   
   @GET
+  @UnitOfWork
   @Path("/phoneNumber/{id}")
   public PhoneNumber findPhoneNumber(@PathParam("id") LongParam id) {
     return phoneNumberDAO.findById(id.get()).orElseThrow(() -> new NotFoundException("No such user."));
