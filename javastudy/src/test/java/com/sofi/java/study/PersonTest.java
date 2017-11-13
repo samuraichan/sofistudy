@@ -53,11 +53,15 @@ public class PersonTest {
   // own custom way of doing something similar to people().stream().filter(...)
   private <T> List<T> filter(List<T> col, Predicate<? super T> predicate) {
     List<T> temp = new ArrayList<>();
-    for (T c : col) {
-      if (predicate.test(c)) {
-        temp.add(c);
+    
+    col.forEach(
+      (c) -> {
+        if (predicate.test(c)) {
+          temp.add(c);
+        }
       }
-    }
+    );
+    
     return temp;
   }
   
